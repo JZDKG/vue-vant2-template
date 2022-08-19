@@ -13,11 +13,11 @@ process.env.VUE_APP_UPDATE_TIME = time
 process.env.VUE_APP_VERSION = version
 
 const resolve = (dir) => path.join(__dirname, dir)
-// const mockServer = () => {
-//   if (process.env.NODE_ENV === 'development')
-//     return require('./mock/mock-server')
-//   else return ''
-// }
+const mockServer = () => {
+  if (process.env.NODE_ENV === 'development')
+    return require('./mock/mock-server.js')
+  else return ''
+}
 module.exports = {
   // 开发以及部署时的URL
   publicPath: '',
@@ -43,7 +43,7 @@ module.exports = {
       warnings: false,
       errors: false,
     },
-    before: require('./mock/mock-server.js'),
+    after: mockServer(),
   },
   //如果这个值是一个对象，则会通过 webpack-merge 合并到最终的配置中。
   // 如果这个值是一个函数，则会接收被解析的配置作为参数。该函数既可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本。

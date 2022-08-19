@@ -33,7 +33,7 @@
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "body-parser": "^1.20.0",
-    "chalk": "^5.0.1",
+    "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
