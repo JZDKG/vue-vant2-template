@@ -26,7 +26,7 @@ let loadingInstance
 const handleCode = (code, msg) => {
   switch (code) {
     case invalidCode:
-      Vue.prototype.$global.baseNotify(msg || `后端接口${code}异常`, 'error')
+      Vue.prototype.$global.baseNotify(msg || `后端接口${code}异常`, 'danger')
       store.dispatch('user/resetAccessToken').catch(() => {})
       if (loginInterception) {
         location.reload()
@@ -36,7 +36,7 @@ const handleCode = (code, msg) => {
       router.push({ path: '/401' }).catch(() => {})
       break
     default:
-      Vue.prototype.$global.baseNotify(msg || `后端接口${code}异常`, 'error')
+      Vue.prototype.$global.baseNotify(msg || `后端接口${code}异常`, 'danger')
       break
   }
 }
@@ -80,18 +80,19 @@ instance.interceptors.response.use(
     if (loadingInstance) loadingInstance.clear()
 
     const { data, config } = response
-    const { code, msg } = data
+    const { code, message, flag } = data
     // 操作正常Code数组
     const codeVerificationArray = isArray(successCode)
       ? [...successCode]
       : [...[successCode]]
     // 是否操作正常
-    if (codeVerificationArray.includes(code)) {
+    if (codeVerificationArray.includes(code) || flag) {
       return data
     } else {
-      handleCode(code, msg)
+      handleCode(code, message)
       return Promise.reject(
-        '请求异常:' + JSON.stringify({ url: config.url, code, msg }) || 'Error'
+        '请求异常:' + JSON.stringify({ url: config.url, code, message }) ||
+          'Error'
       )
     }
   },
@@ -100,7 +101,7 @@ instance.interceptors.response.use(
     const { response, message } = error
     if (error.response && error.response.data) {
       const { status, data } = response
-      handleCode(status, data.msg || message)
+      handleCode(status, data.message || message)
       return Promise.reject(error)
     } else {
       let { message } = error
@@ -114,7 +115,7 @@ instance.interceptors.response.use(
         const code = message.substr(message.length - 3)
         message = '后端接口' + code + '异常'
       }
-      Vue.prototype.$global.baseNotify(message || `后端接口未知异常`, 'error')
+      Vue.prototype.$global.baseNotify(message || `后端接口未知异常`, 'danger')
       return Promise.reject(error)
     }
   }

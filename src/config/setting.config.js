@@ -3,7 +3,7 @@
  */
 const setting = {
   //标题
-  title: '核酸采集系统',
+  title: 'vue-vant2-template',
   // token类型----默认为localStorage,可选值：localStorage,sessionStorage,cookie
   storage: 'cookie',
   // token名称

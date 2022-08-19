@@ -43,7 +43,7 @@ module.exports = {
       warnings: false,
       errors: false,
     },
-    // before: require('./mock/mock-server.js'),
+    before: require('./mock/mock-server.js'),
   },
   //如果这个值是一个对象，则会通过 webpack-merge 合并到最终的配置中。
   // 如果这个值是一个函数，则会接收被解析的配置作为参数。该函数既可以修改配置并不返回任何东西，也可以返回一个被克隆或合并过的配置版本。
@@ -71,6 +71,18 @@ module.exports = {
     config.when(process.env.NODE_ENV === 'development', (config) => {
       config.devtool('source-map')
     })
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end()
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]',
+      })
+      .end()
   },
   //是否使用包含运行时编译器的 Vue 构建版本。设置为 true 后你就可以在 Vue 组件中使用 template 选项了，但是这会让你的应用额外增加 10kb 左右。
   runtimeCompiler: true,
