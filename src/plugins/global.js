@@ -5,6 +5,7 @@
  */
 import { Notify, Toast } from 'vant'
 import Vue from 'vue'
+import * as lodash from 'lodash'
 
 const global = {
   baseToast: (message, type) => {
@@ -30,6 +31,8 @@ const global = {
       message: message ? message : '加载中',
     })
   },
+  /* 全局lodash */
+  baseLodash: lodash,
 }
 
 Vue.prototype.$global = global
