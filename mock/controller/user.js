@@ -14,12 +14,12 @@ module.exports = [
       if (!accessToken) {
         return {
           code: 500,
-          msg: '帐户或密码不正确。',
+          message: '帐户或密码不正确。',
         }
       }
       return {
         code: 200,
-        msg: 'success',
+        message: 'success',
         data: { accessToken },
       }
     },
@@ -49,10 +49,7 @@ module.exports = [
         data: {
           permissions,
           username,
-          'avatar|1': [
-            'https://i.gtimg.cn/club/item/face/img/2/15922_100.gif',
-            'https://i.gtimg.cn/club/item/face/img/8/15918_100.gif',
-          ],
+          avatar: 'https://picsum.photos/200',
         },
       }
     },

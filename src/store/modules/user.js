@@ -7,12 +7,14 @@ const state = {
   accessToken: getToken(),
   permissions: [],
   username: '',
+  avatar: '',
 }
 
 const getters = {
   accessToken: (state) => state.accessToken,
   permissions: (state) => state.permissions,
   username: (state) => state.username,
+  avatar: (state) => state.avatar,
 }
 
 const mutations = {
@@ -26,13 +28,16 @@ const mutations = {
   setUsername(state, username) {
     state.username = username
   },
+  setAvatar(state, avatar) {
+    state.avatar = avatar
+  },
 }
 
 const actions = {
   async login({ commit }, userInfo) {
     //...登陆逻辑
     const { data } = await login(userInfo)
-    const accessToken = data.token
+    const accessToken = data.accessToken
     if (accessToken) {
       commit('setAccessToken', accessToken)
       const hour = new Date().getHours()
@@ -47,7 +52,7 @@ const actions = {
           ? '下午好'
           : '晚上好'
       Vue.prototype.$global.baseNotify(
-        `${thisTime}，用户${userInfo.mobile}，欢迎登录${title}!`,
+        `${thisTime}，欢迎登录${title}!`,
         'success'
       )
     } else {
@@ -55,15 +60,17 @@ const actions = {
     }
   },
   async getUserInfo({ commit }) {
-    let { data } = await getUserInfo()
+    let { data } = await getUserInfo(state.accessToken)
     if (!data) {
-      Vue.prototype.$global.baseNotify('验证失败，请重新登录...', 'danger')
+      Vue.prototype.$global.baseNotify('验证失败，请重新登录', 'danger')
       return false
     }
-    let permissions = ['admin']
-    if (permissions && Array.isArray(permissions)) {
+    let { permissions, username, avatar } = data
+    if (permissions && username && Array.isArray(permissions)) {
       commit('setPermissions', permissions)
-      commit('setUsername', data)
+      commit('setUsername', username)
+      commit('setAvatar', avatar)
+      return permissions
     } else {
       Vue.prototype.$global.baseNotify('用户信息接口异常', 'danger')
       return false

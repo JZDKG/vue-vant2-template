@@ -12,19 +12,7 @@ body, #app {
 p {
   margin: 0;
 }
-.app-container {
-  width: 100%;
-  height: 100%;
-}
-.layout-content {
-  width: 100%;
-  height: calc(100% - 162px);
-}
-.layout-footer {
-  flex: 0 162px;
-  height: 162px;
-  width: 100%;
-}
+
 .w-100 {
   width: 100%;
 }

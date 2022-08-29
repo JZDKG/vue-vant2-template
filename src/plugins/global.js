@@ -1,5 +1,5 @@
 /**
- * @Description: 对element组件进行全局封装
+ * @Description: 全局封装
  * @author TK
  * @date 2022-06-29 12:06:02
  */
@@ -25,6 +25,7 @@ const global = {
     })
   },
   baseLoading: (message, forbidClick) => {
+    Toast.allowMultiple(true)
     return Toast.loading({
       duration: 0, // 持续展示 toast
       forbidClick: !!forbidClick,

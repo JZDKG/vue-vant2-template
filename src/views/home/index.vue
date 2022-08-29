@@ -1,19 +1,24 @@
 <template>
-  <div class="index-body">
-    <van-button type="primary">主要按钮</van-button>
-    <van-button type="info">信息按钮</van-button>
-    <van-button type="default">默认按钮</van-button>
-    <van-button type="warning">警告按钮</van-button>
-    <van-button type="danger">危险按钮</van-button>
+  <div class="home-container">
+    <van-image round fit="cover" :src="avatar" class="head-img" />
+    <p>{{ username }}</p>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
     name: 'Home',
     components: {},
     data() {
       return {}
+    },
+    computed: {
+      ...mapGetters({
+        avatar: 'user/avatar',
+        username: 'user/username',
+      }),
     },
     created() {},
     mounted() {},
@@ -21,4 +26,25 @@
   }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+  .home-container {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .head-img {
+      height: 100px;
+      width: 100px;
+    }
+
+    p {
+      margin-top: 10px;
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
+</style>
