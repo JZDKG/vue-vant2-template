@@ -31,15 +31,15 @@ module.exports = [
       const { accessToken } = config.body
       let permissions = ['admin']
       let username = 'admin'
-      if ('admin-Token' === accessToken) {
+      if (accessToken === 'admin-Token') {
         permissions = ['admin']
         username = 'admin'
       }
-      if ('editor-Token' === accessToken) {
+      if (accessToken === 'editor-Token') {
         permissions = ['editor']
         username = 'editor'
       }
-      if ('test-Token' === accessToken) {
+      if (accessToken === 'test-Token') {
         permissions = ['admin', 'editor']
         username = 'test'
       }
